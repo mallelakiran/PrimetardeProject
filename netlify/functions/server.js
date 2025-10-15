@@ -11,6 +11,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_jwt_key_here_change_in_production';
 process.env.JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 process.env.DB_PATH = process.env.DB_PATH || '/tmp/primetrade.db';
+process.env.NETLIFY = 'true';
 
 const db = require('../../src/config/databaseAdapter');
 const { errorHandler, notFound } = require('../../src/middleware/errorMiddleware');
@@ -30,7 +31,9 @@ app.use(helmet({
 
 app.use(cors({
   origin: true,
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // Rate limiting
@@ -47,6 +50,16 @@ app.use(morgan('combined'));
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Health check route
+app.get('/api/v1/health', (req, res) => {
+  res.json({ 
+    status: 'success', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV
+  });
+});
 
 // API routes
 app.use('/api/v1/auth', authRoutes);

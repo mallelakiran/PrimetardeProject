@@ -1,6 +1,6 @@
 // Database adapter that switches between SQLite (local) and Netlify Blobs (production)
 
-const isNetlify = process.env.NETLIFY === 'true' || process.env.NODE_ENV === 'production';
+const isNetlify = process.env.NETLIFY === 'true';
 
 let db;
 
