@@ -13,6 +13,7 @@ const { seedDatabase } = require('./utils/seedDatabase');
 // Import routes
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const userRoutes = require('./routes/userRoutes');
 const swaggerSetup = require('./config/swagger');
 
 const app = express();
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 // API routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/tasks', taskRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Swagger documentation
 swaggerSetup(app);

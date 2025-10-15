@@ -13,6 +13,8 @@ class MemoryDatabase {
   async initialize() {
     if (this.initialized) return;
     
+    console.log('🔄 Initializing memory database...');
+    
     try {
       // Create initial admin user
       const adminPassword = await bcrypt.hash('Admin123', 12);

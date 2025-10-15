@@ -19,6 +19,7 @@ const { errorHandler, notFound } = require('../../src/middleware/errorMiddleware
 // Import routes
 const authRoutes = require('../../src/routes/authRoutes');
 const taskRoutes = require('../../src/routes/taskRoutes');
+const userRoutes = require('../../src/routes/userRoutes');
 const swaggerSetup = require('../../src/config/swagger');
 
 const app = express();
@@ -64,6 +65,7 @@ app.get('/api/v1/health', (req, res) => {
 // API routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/tasks', taskRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Swagger documentation
 swaggerSetup(app);
@@ -83,6 +85,7 @@ const initializeApp = async () => {
       console.log('✅ Database initialized for serverless function');
     } catch (error) {
       console.error('❌ Failed to initialize database:', error);
+      // Don't throw error, continue with empty database
     }
   }
 };
