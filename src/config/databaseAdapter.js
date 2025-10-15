@@ -5,8 +5,8 @@ const isNetlify = process.env.NETLIFY === 'true';
 let db;
 
 if (isNetlify) {
-  // Use Netlify Blobs for production
-  db = require('./netlifyDatabase');
+  // Use Memory Database for production (quick fix)
+  db = require('./memoryDatabase');
 } else {
   // Use SQLite for local development
   const sqlite = require('./database');
